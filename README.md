@@ -81,6 +81,13 @@ Para garantizar que solo código de calidad se fusiona a `main`:
    - ✅ Require branches to be up to date
    - ✅ Include administrators
 
+## Documentación Adicional
+
+- [Setup SonarCloud](docs/SETUP_SONARCLOUD.md) - Configuración paso a paso
+- [Quality Gates](docs/QUALITY_GATES.md) - Definición de métricas
+- [Arquitectura del Pipeline](docs/PIPELINE.md) - Diagramas y detalles
+- [Branch Protection](docs/SETUP_BRANCH_PROTECTION.md) - Configuración de reglas
+
 ## Contribuir
 
 1. Crear branch desde `develop`: `git checkout -b feature/tu-feature`
