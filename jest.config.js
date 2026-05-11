@@ -19,5 +19,9 @@ module.exports = {
     '**/?(*.)+(spec|test).js'
   ],
   collectCoverage: true,
-  verbose: true
+  verbose: true,
+  reporters: [
+    'default',
+    ['jest-sonar-reporter', { outputDirectory: 'coverage', outputName: 'test-results.xml' }]
+  ]
 };

@@ -1,7 +1,7 @@
 # QAG2 - Quality Assurance & Governance
 
-[![Build & Test](https://github.com/your-org/qag2/actions/workflows/build.yml/badge.svg)](https://github.com/your-org/qag2/actions/workflows/build.yml)
-[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=qag2&metric=alert_status)](https://sonarcloud.io/dashboard?id=qag2)
+[![Build & Test](https://github.com/DavCoder22/QAG2/actions/workflows/build.yml/badge.svg)](https://github.com/DavCoder22/QAG2/actions/workflows/build.yml)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=QAG2&metric=alert_status)](https://sonarcloud.io/dashboard?id=QAG2)
 
 > Pipeline de QA automatizado con GitHub Actions y SonarCloud para análisis de código y validación de Pull Requests.
 
@@ -32,8 +32,8 @@ Este proyecto implementa un pipeline de CI/CD robusto para garantizar la calidad
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/your-org/qag2.git
-cd qag2
+git clone https://github.com/DavCoder22/QAG2.git
+cd QAG2
 
 # Instalar dependencias
 npm install
