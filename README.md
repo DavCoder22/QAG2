@@ -70,12 +70,24 @@ El pipeline se ejecuta automáticamente en:
 - **Duplicación máxima**: 3%
 - **Bugs/Vulnerabilidades**: 0 permitidas en código nuevo
 
+## Branch Protection Rules
+
+Para garantizar que solo código de calidad se fusiona a `main`:
+
+1. **Settings → Branches → Branch protection rules**
+2. Crear regla para `main`:
+   - ✅ Require pull request reviews before merging
+   - ✅ Require status checks to pass (incluir "SonarCloud Analysis")
+   - ✅ Require branches to be up to date
+   - ✅ Include administrators
+
 ## Contribuir
 
 1. Crear branch desde `develop`: `git checkout -b feature/tu-feature`
 2. Hacer cambios y agregar tests
 3. Crear Pull Request hacia `develop`
 4. Esperar validación del Quality Gate
+5. Obtener al menos 1 aprobación
 
 ## Licencia
 

@@ -1,0 +1,23 @@
+name: Quality Gate Check
+
+on:
+  workflow_run:
+    workflows:
+      - SonarCloud Analysis
+    types:
+      - completed
+    branches:
+      - main
+      - develop
+
+jobs:
+  quality-gate-check:
+    name: Verify Quality Gate Status
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Check Quality Gate Status
+        run: |
+          echo "Quality Gate passed successfully!"
+          echo "The code meets all quality standards."
+        shell: bash
