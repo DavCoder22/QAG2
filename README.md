@@ -1,94 +1,85 @@
 # QAG2 - Quality Assurance & Governance
 
 [![Build & Test](https://github.com/DavCoder22/QAG2/actions/workflows/build.yml/badge.svg)](https://github.com/DavCoder22/QAG2/actions/workflows/build.yml)
-[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=QAG2&metric=alert_status)](https://sonarcloud.io/dashboard?id=QAG2)
 
-> Pipeline de QA automatizado con GitHub Actions y SonarCloud para análisis de código y validación de Pull Requests.
+> Pipeline de QA automatizado con GitHub Actions y SonarQube (self-hosted) para análisis de código y validación de Pull Requests.
 
-## Descripción
+## Arquitectura
 
-Este proyecto implementa un pipeline de CI/CD robusto para garantizar la calidad del código a través de:
-- Integración continua con GitHub Actions
-- Análisis estático de código con SonarCloud
-- Quality Gates para validación automática de PRs
-- Cobertura de código automatizada
+```mermaid
+flowchart TD
+    classDef developer fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef repo fill:#e6f3ff,stroke:#333;
+    classDef orchestration fill:#98fb98,stroke:#333;
+    classDef sonarqube fill:#90ee90,stroke:#333;
+    classDef quality fill:#ffd700,stroke:#333;
+
+    A[Developer]:::developer
+    B[GitHub Repository]:::repo
+    C[GitHub Actions]:::orchestration
+    D[SonarQube Docker]:::sonarqube
+    E[Quality Gate]:::quality
+
+    A -->|Push/PR| B
+    B -->|Trigger| C
+    C -->|Analysis| D
+    D -->|Valida| E
+    E -->|Bloquea/Permite| B
+```
 
 ## Tech Stack
 
 | Componente | Tecnología |
 |------------|------------|
 | CI/CD | GitHub Actions |
-| Análisis de Código | SonarCloud |
+| Análisis de Código | SonarQube (Docker self-hosted) |
 | Lenguaje | Node.js/JavaScript |
 | Testing | Jest |
 
 ## Primeros Pasos
 
-### Requisitos Previos
-- Node.js >= 18.x
-- npm >= 9.x
-
-### Instalación
+### Levantar SonarQube con Docker
 
 ```bash
-# Clonar el repositorio
+# Iniciar SonarQube
+docker-compose up -d
+
+# Acceder: http://localhost:9000
+# Login: admin / admin
+```
+
+### Configurar Proyecto
+
+```bash
+# Clonar repositorio
 git clone https://github.com/DavCoder22/QAG2.git
 cd QAG2
 
 # Instalar dependencias
 npm install
 
-# Ejecutar tests
-npm test
+# Generar token en SonarQube: Administration → Security → Users → Tokens
 ```
-
-## Pipeline de CI/CD
-
-El pipeline se ejecuta automáticamente en:
-- Push a `main` o `develop`
-- Pull Requests hacia `main`
-
-### Jobs del Pipeline
-
-1. **Build** - Compilación del proyecto
-2. **Test** - Ejecución de pruebas unitarias
-3. **SonarCloud Analysis** - Análisis estático de código
-4. **Quality Gate** - Validación de estándares de calidad
-
-## Configuración
 
 ### Secrets de GitHub Actions
 
-| Secret | Descripción |
-|--------|-------------|
-| `SONAR_TOKEN` | Token de autenticación de SonarCloud |
-| `SONAR_ORGANIZATION` | Organización en SonarCloud |
+| Secret | Value |
+|--------|-------|
+| `SONAR_TOKEN` | Token de SonarQube |
+| `SONAR_HOST_URL` | URL de SonarQube (ej: http://localhost:9000) |
+| `SONAR_PROJECT_KEY` | QAG2 |
 
-### Calidad de Código
+## Pipeline de CI/CD
 
-- **Coverage mínimo**: 80%
-- **Duplicación máxima**: 3%
-- **Bugs/Vulnerabilidades**: 0 permitidas en código nuevo
+- **build.yml**: Compilación y tests
+- **sonarqube-selfhosted.yml**: Análisis con SonarQube self-hosted
+- **quality-gate.yml**: Validación de Quality Gate
 
-## Branch Protection Rules
+## Documentación
 
-Para garantizar que solo código de calidad se fusiona a `main`:
-
-1. **Settings → Branches → Branch protection rules**
-2. Crear regla para `main`:
-   - ✅ Require pull request reviews before merging
-   - ✅ Require status checks to pass (incluir "SonarCloud Analysis")
-   - ✅ Require branches to be up to date
-   - ✅ Include administrators
-
-## Contribuir
-
-1. Crear branch desde `develop`: `git checkout -b feature/tu-feature`
-2. Hacer cambios y agregar tests
-3. Crear Pull Request hacia `develop`
-4. Esperar validación del Quality Gate
-5. Obtener al menos 1 aprobación
+- [Setup Docker SonarQube](docs/SETUP_DOCKER.md)
+- [Quality Gates](docs/QUALITY_GATES.md)
 
 ## Licencia
 
-MIT License - voir [LICENSE](LICENSE) para más detalles.
+MIT
