@@ -33,8 +33,7 @@ flowchart TD
 |------------|------------|
 | CI/CD | GitHub Actions |
 | Análisis de Código | SonarQube (Docker self-hosted) |
-| Lenguaje | Node.js/JavaScript |
-| Testing | Jest |
+| Quality Gates | Sonar Way (default) |
 
 ## Primeros Pasos
 
@@ -48,37 +47,29 @@ docker-compose up -d
 # Login: admin / admin
 ```
 
-### Configurar Proyecto
-
-```bash
-# Clonar repositorio
-git clone https://github.com/DavCoder22/QAG2.git
-cd QAG2
-
-# Instalar dependencias
-npm install
-
-# Generar token en SonarQube: Administration → Security → Users → Tokens
-```
-
 ### Secrets de GitHub Actions
 
 | Secret | Value |
 |--------|-------|
 | `SONAR_TOKEN` | Token de SonarQube |
-| `SONAR_HOST_URL` | URL de SonarQube (ej: http://localhost:9000) |
+| `SONAR_HOST_URL` | URL de SonarQube |
 | `SONAR_PROJECT_KEY` | QAG2 |
+
+## Quality Gates
+
+El pipeline incluye validación automática de Quality Gates:
+
+- **Bugs**: 0 permitidos en código nuevo
+- **Vulnerabilidades**: 0 permitidas
+- **Coverage**: >= 80%
+- **Duplicación**: < 3%
+
+Ver [Quality Gates](docs/QUALITY_GATES.md) para más detalles.
 
 ## Pipeline de CI/CD
 
 - **build.yml**: Compilación y tests
-- **sonarqube-selfhosted.yml**: Análisis con SonarQube self-hosted
-- **quality-gate.yml**: Validación de Quality Gate
-
-## Documentación
-
-- [Setup Docker SonarQube](docs/SETUP_DOCKER.md)
-- [Quality Gates](docs/QUALITY_GATES.md)
+- **sonarqube-selfhosted.yml**: Análisis con SonarQube + Quality Gate
 
 ## Licencia
 
